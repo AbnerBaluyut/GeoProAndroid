@@ -24,6 +24,11 @@ class MainViewModel : ViewModel() {
         )
     }
 
+    fun refresh() {
+        clearDisposable()
+        getCountries()
+    }
+
     fun clearDisposable() {
         isLoading.value = false
         MainRepository.clearDisposable()
