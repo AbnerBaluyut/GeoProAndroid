@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         initAdapter()
 
         binding.swCountry.setOnRefreshListener {
-            mainActivityViewModel.refresh()
+            mainActivityViewModel.getCountries()
         }
 
         binding.edtSearch.addTextChangedListener {
@@ -75,10 +75,7 @@ class MainActivity : AppCompatActivity() {
 
             isLoading.observe(this@MainActivity, {
                 binding.edtSearch.isEnabled = !it
-                binding.swCountry.apply {
-                    isRefreshing = it
-                    isEnabled = !it
-                }
+                binding.swCountry.isRefreshing = it
             })
         }
     }
