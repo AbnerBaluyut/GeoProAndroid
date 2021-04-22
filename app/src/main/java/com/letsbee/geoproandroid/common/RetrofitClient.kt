@@ -1,5 +1,6 @@
-package com.letsbee.geoproandroid.retrofit
+package com.letsbee.geoproandroid.common
 
+import com.letsbee.geoproandroid.service.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
