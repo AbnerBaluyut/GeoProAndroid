@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">GeoProAndroid</string>
-    <string name="search">Search</string>
+    <string name="search">Search country or alpha code</string>
+    <string name="country_name">Country Name:</string>
+    <string name="cioc">CIOC:</string>
+    <string name="flag_name">Flag Name:</string>
+    <string name="capital">Capital:</string>
+    <string name="alpha_code">Alpha Code:</string>
+    <string name="population">Population:</string>
 </resources>

@@ -2,12 +2,15 @@ package com.letsbee.geoproandroid.view.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log.e
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.letsbee.geoproandroid.common.utils.isEmpty
+import com.letsbee.geoproandroid.common.utils.isNotEmpty
+import com.letsbee.geoproandroid.common.utils.openActivity
 import com.letsbee.geoproandroid.databinding.ActivityMainBinding
-import com.letsbee.geoproandroid.utils.toast
+import com.letsbee.geoproandroid.common.utils.toast
+import com.letsbee.geoproandroid.view.detail.DetailActivity
 import com.letsbee.geoproandroid.view.main.adapter.CountryAdapter
 
 class MainActivity : AppCompatActivity() {
@@ -25,15 +28,12 @@ class MainActivity : AppCompatActivity() {
         initAdapter()
 
         binding.swCountry.setOnRefreshListener {
-            observeData()
+            mainActivityViewModel.refresh()
         }
 
-        binding.edtSearch.addTextChangedListener(
-            onTextChanged = { searchText, _, _ , _ ->
-                val filter = mainActivityViewModel.getCountriesResponse.value?.filter { searchText?.toString() == it.countryName }
-//                binding.rcvCountries.adapter = filter?.let { CountryAdapter(list = it) }
-            }
-        )
+        binding.edtSearch.addTextChangedListener {
+            countryAdapter.searchFilter(it.toString())
+        }
     }
 
     private fun initViewModel() {
@@ -51,14 +51,34 @@ class MainActivity : AppCompatActivity() {
 
         mainActivityViewModel.apply {
             getCountries()
+
             getCountriesResponse.observe(this@MainActivity, { response ->
-                binding.rcvCountries.adapter = CountryAdapter(list = response)
+                countryAdapter = CountryAdapter(activity = this@MainActivity, list = response) {
+                    openActivity(DetailActivity::class.java) {
+                        putString("flag", it.flag)
+                        putString("countryName", it.countryName)
+                        putString("capital", it.capital)
+                        putString("alphaCode", it.alphaCode)
+                        putString("population", it.population)
+                    }
+                }
+                binding.rcvCountries.adapter = countryAdapter
+
+                if (binding.edtSearch.isNotEmpty()) {
+                    countryAdapter.searchFilter((binding.edtSearch.text.toString()))
+                }
             })
+
             showErrorMessage.observe(this@MainActivity, { error ->
                 toast(message = error, isLengthLong = false)
             })
+
             isLoading.observe(this@MainActivity, {
-                binding.swCountry.isRefreshing = it
+                binding.edtSearch.isEnabled = !it
+                binding.swCountry.apply {
+                    isRefreshing = it
+                    isEnabled = !it
+                }
             })
         }
     }

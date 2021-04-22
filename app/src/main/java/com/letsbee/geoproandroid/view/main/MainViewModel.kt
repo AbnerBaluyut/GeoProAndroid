@@ -5,7 +5,7 @@ import com.letsbee.geoproandroid.model.Responses
 
 class MainViewModel : ViewModel() {
 
-    val getCountriesResponse = MutableLiveData<List<Responses.GetCountriesResponse>>()
+    val getCountriesResponse = MutableLiveData<ArrayList<Responses.GetCountriesResponse>>()
 
     val showErrorMessage = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()

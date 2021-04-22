@@ -14,6 +14,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_edit_text"
         android:hint="@string/search"
+        android:maxLines="1"
+        android:inputType="text"
         android:layout_margin="10dp"
         android:padding="10dp"/>
 

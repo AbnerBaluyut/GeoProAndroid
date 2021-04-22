@@ -1,4 +1,4 @@
-package com.letsbee.geoproandroid.retrofit
+package com.letsbee.geoproandroid.common
 
 object Constant {
 

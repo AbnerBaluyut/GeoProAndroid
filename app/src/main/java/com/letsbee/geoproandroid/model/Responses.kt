@@ -8,6 +8,8 @@ object Responses {
         @SerializedName("name") val countryName: String,
         @SerializedName("capital") val capital: String,
         @SerializedName("alpha2Code") val alphaCode: String,
-        @SerializedName("population") val population: String
+        @SerializedName("population") val population: String,
+        @SerializedName("flag") val flag: String,
+        @SerializedName("cioc") val cioc: String
     )
 }
